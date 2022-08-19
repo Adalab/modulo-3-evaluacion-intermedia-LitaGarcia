@@ -23,6 +23,8 @@ function App() {
   const handleClick = (ev) => {
     ev.preventDefault();
     setCharacters([...characters, newObject]);
+    setSearchPhrase('');
+    setSearchCharacters('');
   };
 
   const handleNewObject = (ev) =>
