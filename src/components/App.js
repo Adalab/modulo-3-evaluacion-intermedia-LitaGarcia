@@ -1,8 +1,6 @@
 import '../styles/App.scss';
 import { useEffect, useState } from 'react';
 import getDataApi from '../services/fetch';
-// import { v4 as uuid } from 'uuid';
-
 function App() {
   const [characters, setCharacters] = useState([]);
   const [newObject, setNewObject] = useState({
@@ -23,8 +21,10 @@ function App() {
   const handleClick = (ev) => {
     ev.preventDefault();
     setCharacters([...characters, newObject]);
-    setSearchPhrase('');
-    setSearchCharacters('');
+    setNewObject({
+      quote: '',
+      character: '',
+    });
   };
 
   const handleNewObject = (ev) =>
@@ -96,7 +96,7 @@ function App() {
             name="addNewPhrase"
             id="addNewPhrase"
             onChange={handleNewObject}
-            value={newObject.phrase}
+            value={newObject.quote}
           ></input>
           <label htmlFor="addNewCharacter">Personaje</label>
           <input
