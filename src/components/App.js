@@ -5,7 +5,7 @@ import dataCharacters from '../data/data.json';
 
 function App() {
   const [characters, setCharacters] = useState(dataCharacters);
-  const [newPhrase, setNewPhrase] = useState({
+  const [newObject, setNewObject] = useState({
     quote: '',
     character: '',
   });
@@ -18,14 +18,14 @@ function App() {
 
   const handleClick = (ev) => {
     ev.preventDefault();
-    setCharacters([...characters, newPhrase]);
+    setCharacters([...characters, newObject]);
   };
 
-  const handleNewPhrase = (ev) =>
-    setNewPhrase({ ...newPhrase, quote: ev.target.value });
+  const handleNewObject = (ev) =>
+    setNewObject({ ...newObject, quote: ev.target.value });
 
   const handleNewCharacter = (ev) =>
-    setNewPhrase({ ...newPhrase, character: ev.target.value });
+    setNewObject({ ...newObject, character: ev.target.value });
 
   const html = characters
     .filter((char) => {
@@ -89,8 +89,8 @@ function App() {
             type="text"
             name="addNewPhrase"
             id="addNewPhrase"
-            onChange={handleNewPhrase}
-            value={newPhrase.phrase}
+            onChange={handleNewObject}
+            value={newObject.phrase}
           ></input>
           <label htmlFor="addNewCharacter">Personaje</label>
           <input
@@ -98,7 +98,7 @@ function App() {
             name="addNewCharacter"
             id="addNewCharacter"
             onChange={handleNewCharacter}
-            value={newPhrase.character}
+            value={newObject.character}
           ></input>
           <button type="button" onClick={handleClick}>
             Añadir una nueva frase
