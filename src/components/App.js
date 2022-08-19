@@ -6,28 +6,47 @@ import dataCharacters from '../data/data.json';
 function App() {
   const [characters, setCharacters] = useState(dataCharacters);
   const [newPhrase, setNewPhrase] = useState({
-    phrase: '',
+    quote: '',
     character: '',
   });
+  const [searchPhrase, setSearchPhrase] = useState('');
+  const [searchCharacters, setSearchCharacters] = useState('');
+
+  const handleSearchPhrase = (ev) => setSearchPhrase(ev.currentTarget.value);
+  const handleSearchCharacter = (ev) =>
+    setSearchCharacters(ev.currentTarget.value);
+
   const handleClick = (ev) => {
     ev.preventDefault();
     setCharacters([...characters, newPhrase]);
   };
 
-  const handleNewPhrase = (ev) => {
-    setNewPhrase({ ...newPhrase, phrase: ev.target.value });
-  };
-  const handleNewCharacter = (ev) => {
+  const handleNewPhrase = (ev) =>
+    setNewPhrase({ ...newPhrase, quote: ev.target.value });
+
+  const handleNewCharacter = (ev) =>
     setNewPhrase({ ...newPhrase, character: ev.target.value });
-  };
-  const html = characters.map((char, i) => {
-    return (
-      <li key={i}>
-        <p>{char.quote}</p>
-        <p>-{char.character}</p>
-      </li>
-    );
-  });
+
+  const html = characters
+    .filter((char) => {
+      if (searchCharacters.toLowerCase() !== 'all') {
+        return char.character
+          .toLowerCase()
+          .includes(searchCharacters.toLowerCase());
+      }
+      return characters;
+    })
+    .filter((char) =>
+      char.quote.toLowerCase().includes(searchPhrase.toLowerCase())
+    )
+    .map((char, i) => {
+      return (
+        <li key={i}>
+          <p>{char.quote}</p>
+          <p>-{char.character}</p>
+        </li>
+      );
+    });
 
   return (
     <>
@@ -35,9 +54,20 @@ function App() {
         <h1>Frases de Friends</h1>
         <form>
           <label htmlFor="searchPhrase">Filtrar por frase</label>
-          <input type="text" name="searchPhrase" id="searchPhrase"></input>
+          <input
+            type="text"
+            name="searchPhrase"
+            id="searchPhrase"
+            onChange={handleSearchPhrase}
+            value={searchPhrase}
+          ></input>
           <label htmlFor="selectCharacter">Filtrar por personaje</label>
-          <select name="character" id="character">
+          <select
+            name="character"
+            id="character"
+            onChange={handleSearchCharacter}
+            value={searchCharacters}
+          >
             <option value="all">Todos</option>
             <option value="ross">Ross</option>
             <option value="monica">Monica</option>
