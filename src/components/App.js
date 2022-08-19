@@ -10,6 +10,14 @@ function App() {
   const [searchPhrase, setSearchPhrase] = useState('');
   const [searchCharacters, setSearchCharacters] = useState('');
 
+  const htmlCharacters = characters.map((data, i) => {
+    return (
+      <option key={i} value={data.character}>
+        {data.character}
+      </option>
+    );
+  });
+
   useEffect(() => {
     getDataApi().then((data) => setCharacters(data));
   }, []);
@@ -74,13 +82,7 @@ function App() {
             onChange={handleSearchCharacter}
             value={searchCharacters}
           >
-            <option value="all">Todos</option>
-            <option value="ross">Ross</option>
-            <option value="monica">Monica</option>
-            <option value="joey">Joey</option>
-            <option value="phoebe">Phoebe</option>
-            <option value="chandler">Chandler</option>
-            <option value="rachel">Rachel</option>
+            {htmlCharacters}
           </select>
         </form>
       </header>
