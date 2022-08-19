@@ -1,16 +1,20 @@
 import '../styles/App.scss';
-import { useState } from 'react';
-import dataCharacters from '../data/data.json';
+import { useEffect, useState } from 'react';
+import getDataApi from '../services/fetch';
 // import { v4 as uuid } from 'uuid';
 
 function App() {
-  const [characters, setCharacters] = useState(dataCharacters);
+  const [characters, setCharacters] = useState([]);
   const [newObject, setNewObject] = useState({
     quote: '',
     character: '',
   });
   const [searchPhrase, setSearchPhrase] = useState('');
   const [searchCharacters, setSearchCharacters] = useState('');
+
+  useEffect(() => {
+    getDataApi().then((data) => setCharacters(data));
+  }, []);
 
   const handleSearchPhrase = (ev) => setSearchPhrase(ev.currentTarget.value);
   const handleSearchCharacter = (ev) =>
