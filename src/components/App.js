@@ -4,7 +4,22 @@ import dataCharacters from '../data/data.json';
 // import { v4 as uuid } from 'uuid';
 
 function App() {
-  const [characters, selectCharacters] = useState(dataCharacters);
+  const [characters, setCharacters] = useState(dataCharacters);
+  const [newPhrase, setNewPhrase] = useState({
+    phrase: '',
+    character: '',
+  });
+  const handleClick = (ev) => {
+    ev.preventDefault();
+    setCharacters([...characters, newPhrase]);
+  };
+
+  const handleNewPhrase = (ev) => {
+    setNewPhrase({ ...newPhrase, phrase: ev.target.value });
+  };
+  const handleNewCharacter = (ev) => {
+    setNewPhrase({ ...newPhrase, character: ev.target.value });
+  };
   const html = characters.map((char, i) => {
     return (
       <li key={i}>
@@ -13,6 +28,7 @@ function App() {
       </li>
     );
   });
+
   return (
     <>
       <header>
@@ -32,20 +48,31 @@ function App() {
           </select>
         </form>
       </header>
-      <body>
+      <main>
         <ul>{html}</ul>
-      </body>
+      </main>
       <footer>
         <form>
           <legend>Añadir una nueva frase</legend>
           <label htmlFor="addNewPhrase">Frase</label>
-          <input type="text" name="addNewPhrase" id="addNewPhrase"></input>
+          <input
+            type="text"
+            name="addNewPhrase"
+            id="addNewPhrase"
+            onChange={handleNewPhrase}
+            value={newPhrase.phrase}
+          ></input>
           <label htmlFor="addNewCharacter">Personaje</label>
           <input
             type="text"
             name="addNewCharacter"
             id="addNewCharacter"
+            onChange={handleNewCharacter}
+            value={newPhrase.character}
           ></input>
+          <button type="button" onClick={handleClick}>
+            Añadir una nueva frase
+          </button>
         </form>
       </footer>
     </>
