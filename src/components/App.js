@@ -2,33 +2,33 @@ import '../styles/App.scss';
 import { useEffect, useState } from 'react';
 import getDataApi from '../services/fetch';
 function App() {
-  const [characters, setCharacters] = useState([]);
+  const [dataCharacters, setdataCharacters] = useState([]);
   const [newObject, setNewObject] = useState({
     quote: '',
     character: '',
   });
   const [searchPhrase, setSearchPhrase] = useState('');
-  const [searchCharacters, setSearchCharacters] = useState('');
+  const [searchdataCharacters, setSearchdataCharacters] = useState('');
+  const [characters, setCharacters] = useState(new Set());
 
-  const htmlCharacters = characters.map((data, i) => {
-    return (
-      <option key={i} value={data.character}>
-        {data.character}
-      </option>
-    );
+  const htmldataCharacters = characters.map((data, i) => {
+    return <option key={i}>{data.character}</option>;
   });
+  // const htmlCharacters = characters.map((data, i) => {
+  //   setCharacters(...data.character);
+  // });
 
   useEffect(() => {
-    getDataApi().then((data) => setCharacters(data));
+    getDataApi().then((data) => setdataCharacters(data));
   }, []);
 
   const handleSearchPhrase = (ev) => setSearchPhrase(ev.currentTarget.value);
   const handleSearchCharacter = (ev) =>
-    setSearchCharacters(ev.currentTarget.value);
+    setSearchdataCharacters(ev.currentTarget.value);
 
   const handleClick = (ev) => {
     ev.preventDefault();
-    setCharacters([...characters, newObject]);
+    setdataCharacters([...dataCharacters, newObject]);
     setNewObject({
       quote: '',
       character: '',
@@ -41,14 +41,14 @@ function App() {
   const handleNewCharacter = (ev) =>
     setNewObject({ ...newObject, character: ev.target.value });
 
-  const html = characters
+  const html = dataCharacters
     .filter((char) => {
-      if (searchCharacters.toLowerCase() !== 'all') {
+      if (searchdataCharacters.toLowerCase() !== 'all') {
         return char.character
           .toLowerCase()
-          .includes(searchCharacters.toLowerCase());
+          .includes(searchdataCharacters.toLowerCase());
       }
-      return characters;
+      return dataCharacters;
     })
     .filter((char) =>
       char.quote.toLowerCase().includes(searchPhrase.toLowerCase())
@@ -80,9 +80,9 @@ function App() {
             name="character"
             id="character"
             onChange={handleSearchCharacter}
-            value={searchCharacters}
+            value={searchdataCharacters}
           >
-            {htmlCharacters}
+            {htmldataCharacters}
           </select>
         </form>
       </header>
