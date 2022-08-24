@@ -9,13 +9,12 @@ function App() {
   });
   const [searchPhrase, setSearchPhrase] = useState('');
   const [searchdataCharacters, setSearchdataCharacters] = useState('');
-  const [characters, setCharacters] = useState(new Set());
+  // const [characters, setCharacters] = useState(new Set());
 
-  const htmldataCharacters = characters.map((data, i) => {
-    return <option key={i}>{data.character}</option>;
-  });
+  //tengo que añadirle al set los elementos (dataCharacters.elements)
+
   // const htmlCharacters = characters.map((data, i) => {
-  //   setCharacters(...data.character);
+  //   return <option key={i}>{data.character}</option>;
   // });
 
   useEffect(() => {
@@ -28,11 +27,13 @@ function App() {
 
   const handleClick = (ev) => {
     ev.preventDefault();
-    setdataCharacters([...dataCharacters, newObject]);
-    setNewObject({
-      quote: '',
-      character: '',
-    });
+    if (newObject.quote !== '' && newObject.character !== '') {
+      setdataCharacters([...dataCharacters, newObject]);
+      setNewObject({
+        quote: '',
+        character: '',
+      });
+    }
   };
 
   const handleNewObject = (ev) =>
@@ -43,10 +44,8 @@ function App() {
 
   const html = dataCharacters
     .filter((char) => {
-      if (searchdataCharacters.toLowerCase() !== 'all') {
-        return char.character
-          .toLowerCase()
-          .includes(searchdataCharacters.toLowerCase());
+      if (searchdataCharacters === 'all') {
+        return true;
       }
       return dataCharacters;
     })
@@ -82,7 +81,7 @@ function App() {
             onChange={handleSearchCharacter}
             value={searchdataCharacters}
           >
-            {htmldataCharacters}
+            {/* {htmlCharacters} */}
           </select>
         </form>
       </header>
