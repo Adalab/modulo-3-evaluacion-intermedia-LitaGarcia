@@ -9,13 +9,14 @@ function App() {
   });
   const [searchPhrase, setSearchPhrase] = useState('');
   const [searchdataCharacters, setSearchdataCharacters] = useState('');
+
   // const [characters, setCharacters] = useState(new Set());
 
-  //tengo que añadirle al set los elementos (dataCharacters.elements)
+  //dataCharacters.add(newObject.character)
 
-  // const htmlCharacters = characters.map((data, i) => {
-  //   return <option key={i}>{data.character}</option>;
-  // });
+  const htmlCharacters = dataCharacters.map((data, i) => {
+    return <option key={i}>{data.character}</option>;
+  });
 
   useEffect(() => {
     getDataApi().then((data) => setdataCharacters(data));
@@ -81,7 +82,7 @@ function App() {
             onChange={handleSearchCharacter}
             value={searchdataCharacters}
           >
-            {/* {htmlCharacters} */}
+            {htmlCharacters}
           </select>
         </form>
       </header>
